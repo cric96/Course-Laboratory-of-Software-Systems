@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.0f87e7d61ea41006cfd5671ae5bbfff8e09ee42d07f34b7f130db0c5e72dd058.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.0ab8c954a02adc8ff8cfc306d8ab3bd3463c057f69a5aaef066c5efaa444854e.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="advanced-versioning-techniques">Advanced Versioning Techniques</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-07-05
+2022-08-15
 
 </section><section>
 <h1 id="annotated-tagging">Annotated Tagging</h1>
@@ -51,6 +51,66 @@
 </li>
 </ul>
 </section><section>
+<h1 id="signing-commits">Signing commits</h1>
+<p>Nice people <em>signs</em> commits, certifying their authorship.</p>
+<ul>
+<li>Signed commits appear with a ✅
+ on GitHub</li>
+</ul>
+<p>If you do not have a signature yet, <a href="https://central.sonatype.org/pages/working-with-pgp-signatures.html">time to create one</a></p>
+<ul>
+<li>Creation: <code>gpg --gen-key</code></li>
+<li>List: <code>gpg --list-keys</code></li>
+<li>Distribution: <code>gpg --keyserver hkp://pool.sks-keyservers.net --send-keys</code></li>
+</ul>
+<p>Once you have a private key to sign with, you can configure Git to use it for signing things by setting the user.signingkey config setting.</p>
+<p><code>git config --global user.signingkey &lt;YOUR_KEY_ID&gt;</code></p>
+</section><section>
+<h1 id="stashing">Stashing</h1>
+<p>Classic situation:</p>
+<ol>
+<li>Work on some project, have the project in inconsistent state</li>
+<li>Something needs to be fixed on another branch</li>
+</ol>
+<p>$\Rightarrow$ You don&rsquo;t want to have commits half-way, but you can&rsquo;t lose what you have done&hellip;</p>
+<h2 id="git-stash-to-the-rescue"><code>git stash</code> to the rescue</h2>
+<p>Stashing takes the dirty state of the working directory and saves it on a <strong>stack</strong> of <em>unfinished changes</em> that you can <em>reapply at any time</em></p>
+<ul>
+<li>application on different branches allowed!</li>
+</ul>
+</section><section>
+<h2 id="practical-stashing">Practical stashing</h2>
+<ul>
+<li><code>git stash</code>
+<ul>
+<li><strong>Pushes</strong> <em>all</em> dangling changes (staged or unstaged) to the stash</li>
+</ul>
+</li>
+<li><code>git stash list</code>
+<ul>
+<li><strong>Shows</strong> all the accumulated stashes</li>
+</ul>
+</li>
+<li><code>git stash apply [stash@{N}] [--index]</code>
+<ul>
+<li>No option specified: <strong>Re-applies</strong>, <em>without removing</em> from the stash, the <em>latest</em> stashed change</li>
+<li>If <code>stash@{N}</code>, applies the <em>N-th</em> stashed change</li>
+<li>If <code>--index</code> is specified, the changes that were staged at the time of push get <em>re-staged</em></li>
+</ul>
+</li>
+<li><code>git stash drop stash@{N}</code>
+<ul>
+<li><strong>Deletes</strong> the <em>N-th</em> stashed change</li>
+</ul>
+</li>
+<li><code>git stash pop</code>
+<ul>
+<li><strong>Re-applies</strong> <em>the most recent</em> stash, <em>removing</em> it from the stash</li>
+<li>Same as <code>git stash apply &amp;&amp; git stash drop stash@{0}</code></li>
+</ul>
+</li>
+</ul>
+</section><section>
 <h1 id="advanced-merging">Advanced merging</h1>
 <ul>
 <li>In classic merging, diverging branches are reunited through a <strong>merge commit</strong></li>
@@ -58,9 +118,9 @@
 <p><img src="basic-rebase-1.png" alt=""></p>
 </section><section>
 <h1 id="advanced-merging-1">Advanced merging</h1>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git checkout master
-git merge experiment
-</code></pre></div><p><img src="basic-rebase-2.png" alt=""></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>git checkout master
+</span></span><span style="display:flex;"><span>git merge experiment
+</span></span></code></pre></div><p><img src="basic-rebase-2.png" alt=""></p>
 </section><section>
 <h1 id="advanced-merging-rebase">Advanced merging: rebase</h1>
 <ul>
@@ -81,16 +141,16 @@ git merge experiment
 </section><section>
 <h1 id="advanced-merging-rebase-1">Advanced merging: rebase</h1>
 <p><img src="basic-rebase-1.png" alt=""></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git checkout experiment
-git rebase master
-</code></pre></div></section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>git checkout experiment
+</span></span><span style="display:flex;"><span>git rebase master
+</span></span></code></pre></div></section><section>
 <h1 id="advanced-merging-rebase-2">Advanced merging: rebase</h1>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git checkout experiment
-git rebase master
-</code></pre></div><p><img src="basic-rebase-3.png" alt=""></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git checkout master
-git merge experiment <span style="color:#888"># Fast forward!</span>
-</code></pre></div><p><img src="basic-rebase-4.png" alt=""></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>git checkout experiment
+</span></span><span style="display:flex;"><span>git rebase master
+</span></span></code></pre></div><p><img src="basic-rebase-3.png" alt=""></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>git checkout master
+</span></span><span style="display:flex;"><span>git merge experiment <span style="color:#888"># Fast forward!</span>
+</span></span></code></pre></div><p><img src="basic-rebase-4.png" alt=""></p>
 </section><section>
 <h1 id="advanced-rebasing">Advanced rebasing</h1>
 <p><img src="interesting-rebase-1.png" alt=""></p>
@@ -106,8 +166,8 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>git rebase --onto master server client
-</code></pre></div><p><img src="interesting-rebase-2.png" alt=""></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>git rebase --onto master server client
+</span></span></code></pre></div><p><img src="interesting-rebase-2.png" alt=""></p>
 <p>Reads: <em>pick all commits from <code>server</code> (excluded) to <code>client</code> (included), remove them and reply them starting from <code>master</code></em></p>
 </section><section>
 <h1 id="rebase-pull">Rebase pull</h1>
@@ -138,7 +198,7 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 <p>Rebasing <em>rewrites the project history</em> and as such generates <em>incompatible histories</em></p>
 <ul>
 <li>Remote pushes may get <em>refused</em>!</li>
-<li>pushing with <code>--force</code> <em>rewrites history remotely</em> and <strong>may delete other people commits</strong>!</li>
+<li>pushing with <code>--force</code> <em>rewrites history remotely</em> and <strong>may delete other people&rsquo;s commits</strong>!</li>
 <li><code>git pull --rebase</code> is safe, if the local commits where never pushed in any remote
 <ul>
 <li>It is actually a good practice to default to it</li>
@@ -312,14 +372,14 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 <p>Squashing results in <em>further alteration</em> than rebase</p>
 <p><strong>Merge</strong> when you want to <em>retain history</em>, keeping track of what happened</p>
 <p><strong>Rebase</strong> only when you are the only one with the commits, to favor <em>linearity</em></p>
-<p><strong>Squash</strong> when you are the only one, and some of the commits are somewhat &ldquo;tests&rdquo;, points in time you do not want to get back to anyway</p>
+<p><strong>Squash</strong> when some of the commits are somewhat &ldquo;tests&rdquo;, points in time you do not want to get back to anyway</p>
 </section><section>
 <h1 id="cherry-picking">Cherry picking</h1>
 <p>Selecting and importing a single commit (or commit range) from another branch</p>
-<p><code>git cherry-pick commitRef</code></p>
+<p><code>git cherry-pick &lt;tree-ish&gt;</code></p>
 <ul>
-<li>Picks commitRef and adds it to HEAD</li>
-<li>If <code>commitRef</code> is a branch name, cherry picks the last commit of the branch</li>
+<li>Picks <code>&lt;tree-ish&gt;</code> and adds it to <code>HEAD</code></li>
+<li>If <code>&lt;tree-ish&gt;</code> is a branch name, cherry picks the last commit of the branch</li>
 </ul>
 <p><code>git cherry-pick from..to</code></p>
 <ul>
@@ -364,7 +424,7 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 </li>
 <li>Contents of the submodules <strong>are not tracked</strong>, but <strong>linked</strong></li>
 <li>A project can have <em>multiple</em> submodules</li>
-<li><em>Nested</em> submodules are possible, although not recommended</li>
+<li><em>Nested</em> submodules are possible</li>
 </ul>
 </section><section>
 <h2 id="importing-a-repository-with-submodules">Importing a repository with submodules</h2>
@@ -393,18 +453,22 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
 <li><em>recursive behavior</em> can be obtained with <code>--recurse-submodules</code></li>
 </ul>
 </section><section>
-<h2 id="submodules-and-ci">Submodules and CI</h2>
-<ul>
-<li>Submodules require care in CI</li>
-<li>The <em>clone command</em> needs to get <em>altered</em> for them to checkout correctly</li>
-<li>On <em>Travis CI</em>, modules are pulled in <em>automatically</em>
-<ul>
-<li><em>SSH keys</em> however are not trivial to be managed</li>
-<li><em>Prefer HTTPS</em></li>
-</ul>
-</li>
-<li>Other integrators may require to clone with <code>--recurse-submodules</code> explicitly specified</li>
-</ul>
+<h2 id="removing-submodules">Removing submodules</h2>
+<p>No single built-in command 😑
+</p>
+<ol>
+<li>De-init the submodule</li>
+</ol>
+<p><code>git submodule deinit -f -- sub/module/path</code></p>
+<ol start="2">
+<li>Cleanup the submodule worktree (otherwise, it will be impossible to re-add the module in future, as the repository will appear corrupted)</li>
+</ol>
+<p><code>rm -rf .git/modules/sub/module/path</code></p>
+<ol start="3">
+<li>Remove the files from the work tree</li>
+</ol>
+<p><code>git rm -f sub/module/path</code></p>
+<p><strong>Note</strong>: Do not use a trailing slash on the submodule path when using these commands!</p>
 </section>
 
   
@@ -426,7 +490,7 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
   document.getElementsByTagName('head')[0].appendChild(link);
 </script>
 
-<script type="application/json" id="reveal-hugo-site-params">{"height":"100%","pdfseparatefragments":false,"theme":"white","width":"100%"}</script>
+<script type="application/json" id="reveal-hugo-site-params">{"height":"900","pdfseparatefragments":false,"theme":"white","width":"1440"}</script>
 <script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
 
 <script src="/Course-Laboratory-of-Software-Systems/reveal-js/js/reveal.js"></script>
@@ -473,6 +537,34 @@ git merge experiment <span style="color:#888"># Fast forward!</span>
   <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/notes/notes.js"></script>
 
 
+
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({startOnLoad: false});
+    let render = (event) => {
+      let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
+      if (!mermaidElems.length){
+          return
+      }
+      mermaidElems.forEach(mermaidElem => {
+          let processed = mermaidElem.getAttribute('data-processed');
+          if (!processed){
+              
+              mermaid.init(undefined, mermaidElem);
+          }
+      });
+    };
+    Reveal.addEventListener('slidechanged', render);
+    Reveal.addEventListener('ready', render);
+  </script>
 
     <script>
     MathJax = {

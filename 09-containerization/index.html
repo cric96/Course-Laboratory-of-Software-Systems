@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.0f87e7d61ea41006cfd5671ae5bbfff8e09ee42d07f34b7f130db0c5e72dd058.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.0ab8c954a02adc8ff8cfc306d8ab3bd3463c057f69a5aaef066c5efaa444854e.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -27,7 +27,7 @@
     <section><h1 id="hahahugoshortcode-s0-hbhb">Laboratory of Software Systems</h1>
 <h2 id="containerization-basics-and-ci">Containerization: Basics and CI</h2>
 <h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-2021-07-05
+2022-08-15
 
 </section><section>
 <h1 id="containers">Containers</h1>
@@ -48,7 +48,7 @@
 </section><section>
 <h1 id="why-containers">Why containers?</h1>
 <p><img src="memes/works-on-my-machine.jpeg" style='
-    width: 36.5vw;
+    width: 23vw;
     
     max-width: 95vw;
     max-height: 80vh;
@@ -56,7 +56,7 @@
 '>
 
 <img src="memes/docker-born.jpeg" style='
-    width: 33vw;
+    width: 20.8vw;
     
     max-width: 95vw;
     max-height: 80vh;
@@ -74,10 +74,10 @@
 '>
 
 </section><section>
-<h2 id="lightweight-virtual-machines-1">Lightweight virtual machines?</h2>
+<h2 id="more-similar-to-well-confined-processes">More similar to well-confined processes</h2>
 <img src="memes/chroot.jpeg" style='
     
-    
+    height: 60vh;
     max-width: 95vw;
     max-height: 80vh;
     object-fit: contain;
@@ -119,31 +119,12 @@
 </section><section>
 <h1 id="running-docker-containers">Running docker containers</h1>
 <ol>
-<li>
-<p>Install docker</p>
-</li>
-<li>
-<p>Add your user to the <code>docker</code> group</p>
-</li>
-<li>
-<p>Enable the docker service</p>
-</li>
+<li>Install docker</li>
+<li>Add your user to the <code>docker</code> group</li>
+<li>Enable the docker service (on most Linux distributions <code>systemctl start docker</code>)</li>
+<li>Pull an image: <code>docker pull adoptopenjdk</code></li>
+<li>Run a container! <code>docker run adoptopenjdk</code></li>
 </ol>
-<ul>
-<li>e.g. on most Linux distributions <code>systemctl start docker</code></li>
-</ul>
-<ol start="4">
-<li>Pull an image</li>
-</ol>
-<ul>
-<li>e.g., <code>docker pull adoptopenjdk</code></li>
-</ul>
-<ol start="5">
-<li>Run a container!</li>
-</ol>
-<ul>
-<li><code>docker run adoptopenjdk</code></li>
-</ul>
 <p>Every container provides a <em>default command</em>, running without options runs such default in a <em>non-interactive</em> terminal.</p>
 <p>Running in interactive mode can be achieved with the <code>-i</code> option</p>
 <p>Running a custom command can be achieved with writing the command after the image name</p>
@@ -151,6 +132,7 @@
 <li>e.g., <code>docker run -i adoptopenjdk bash</code></li>
 <li>parameters for the custom command can follow</li>
 <li>use the <code>t</code> option to run in a <em>pseudo-tty</em></li>
+<li>use the <code>--rm</code> to remove the container after use</li>
 </ul>
 </section><section>
 <h1 id="interaction-with-the-outside-world">Interaction with the outside world</h1>
@@ -193,23 +175,23 @@
 <p>Changes to a layer do not invalidate previous layers</p>
 </section><section>
 <h1 id="dockerfile-syntax">Dockerfile syntax</h1>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># Pulls an image from docker hub with this name. Alternatively, &#34;scratch&#34; can be used for an empty container</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">FROM</span><span style="color:#d20;background-color:#fff0f0"> manjarolinux/base </span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Runs a command</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">RUN</span> pacman -Sy --noconfirm gnupg archlinux-keyring manjaro-keyring<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Copies a file from the local folder into the image</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">COPY</span> makepkg.conf /etc/makepkg.conf<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Adds a new environment variable</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">ENV</span> <span style="color:#369">GEM_HOME</span>=/rubygems/bin<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Configures the default command to execute</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">CMD</span> bash<span style="color:#a61717;background-color:#e3d2d2">
-</span></code></pre></div></section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span><span style="color:#888"># Pulls an image from docker hub with this name. Alternatively, &#34;scratch&#34; can be used for an empty container</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">FROM</span><span style="color:#d20;background-color:#fff0f0"> manjarolinux/base </span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Runs a command</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">RUN</span> pacman -Sy --noconfirm gnupg archlinux-keyring manjaro-keyring<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Copies a file from the local folder into the image</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">COPY</span> makepkg.conf /etc/makepkg.conf<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Adds a new environment variable</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">ENV</span> <span style="color:#369">GEM_HOME</span>=/rubygems/bin<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Configures the default command to execute</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">CMD</span> bash<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span></code></pre></div></section><section>
 <h1 id="naming-images">Naming images</h1>
 <p>Image naming is done via <em>tags</em></p>
 <p>The easiest way to do so is assigning tags at <em>build time</em> with the <code>-t</code> options of <code>docker build</code></p>
 <p>The option can be repeated multiple times to make multiple tags</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape>docker build -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:latest&#34;</span> -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:0.1.0&#34;</span>
-</code></pre></div><p><code>latest</code> is usually used to identify the most recent version of some image</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape><span style="display:flex;"><span>docker build -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:latest&#34;</span> -t <span style="color:#d20;background-color:#fff0f0">&#34;myImage:0.1.0&#34;</span>
+</span></span></code></pre></div><p><code>latest</code> is usually used to identify the most recent version of some image</p>
 </section><section>
 <h1 id="publishing-docker-images">Publishing docker images</h1>
 <p>Images get published in <em>registries</em></p>
@@ -226,33 +208,9 @@
 </section><section>
 <h1 id="building-docker-images-in-ci">Building docker images in CI</h1>
 <p>Of course, as any other software, <em>custom docker images should get built in CI</em></p>
-<p>Travis CI and most other integrators provide <em>direct support</em></p>
 <p>Several integrators use containers as build environments: it is possible to <em>build a container using a container</em></p>
-<p>More in general, there is <em>no limit on how much containers can be nested into each other</em></p>
-</section><section>
-<h1 id="travis-ci-example">Travis CI example</h1>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#888"># Required: enables the service</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">services</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- docker<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#888"># Optionally, specify where you want your container built, I like to use the latest version of Linux</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">dist</span>:<span style="color:#bbb"> </span>focal<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#888"># Utilities</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">env</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#080;font-weight:bold">global</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- TZ=UTC<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>- IMAGE_NAME=<span style="color:#d20;background-color:#fff0f0">&#34;danysk/manjaro-with-yay&#34;</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#888"># Version computation. Here dates are used instead of Semantic Versioning</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">before_script</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- export<span style="color:#bbb"> </span>TAG=<span style="color:#d20;background-color:#fff0f0">&#34;$(git describe || git log -n1 --date=format:&#39;%Y-%m-%dT%H%M%S&#39; --format=%cd)$(date +%Y-%m-%d_%H%M)&#34;</span><span style="color:#bbb">
-</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="nohighlight" data-noescape><span style="color:#080;font-weight:bold">script</span>:<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#888"># Build the image</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- docker<span style="color:#bbb"> </span>build<span style="color:#bbb"> </span>-t<span style="color:#bbb"> </span>$IMAGE_NAME:latest<span style="color:#bbb"> </span>-t<span style="color:#bbb"> </span>$IMAGE_NAME:$TAG<span style="color:#bbb"> </span>.<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#888"># Login into docker hub from a non-interactive terminal</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- echo<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;$DOCKER_PASSWORD&#34;</span><span style="color:#bbb"> </span>|<span style="color:#bbb"> </span>docker<span style="color:#bbb"> </span>login<span style="color:#bbb"> </span>-u<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">&#34;$DOCKER_USERNAME&#34;</span><span style="color:#bbb"> </span>--password-stdin<span style="color:#bbb"> </span>docker.io<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#888"># Push the images, with both names (upload will happen only once, as they refer the same layer)</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- docker<span style="color:#bbb"> </span>push<span style="color:#bbb"> </span>$IMAGE_NAME:$TAG<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- docker<span style="color:#bbb"> </span>push<span style="color:#bbb"> </span>$IMAGE_NAME:latest<span style="color:#bbb">
-</span></code></pre></div></section>
+<p>More in general, there is <em>no inherent limit to nesting containers</em></p>
+</section>
 
   
 
@@ -273,7 +231,7 @@
   document.getElementsByTagName('head')[0].appendChild(link);
 </script>
 
-<script type="application/json" id="reveal-hugo-site-params">{"height":"100%","pdfseparatefragments":false,"theme":"white","width":"100%"}</script>
+<script type="application/json" id="reveal-hugo-site-params">{"height":"900","pdfseparatefragments":false,"theme":"white","width":"1440"}</script>
 <script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
 
 <script src="/Course-Laboratory-of-Software-Systems/reveal-js/js/reveal.js"></script>
@@ -320,6 +278,34 @@
   <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/notes/notes.js"></script>
 
 
+
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({startOnLoad: false});
+    let render = (event) => {
+      let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
+      if (!mermaidElems.length){
+          return
+      }
+      mermaidElems.forEach(mermaidElem => {
+          let processed = mermaidElem.getAttribute('data-processed');
+          if (!processed){
+              
+              mermaid.init(undefined, mermaidElem);
+          }
+      });
+    };
+    Reveal.addEventListener('slidechanged', render);
+    Reveal.addEventListener('ready', render);
+  </script>
 
     <script>
     MathJax = {

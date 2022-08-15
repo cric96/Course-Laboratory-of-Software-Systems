@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reset.css">
 <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/reveal-js/css/reveal.css">
-  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.0f87e7d61ea41006cfd5671ae5bbfff8e09ee42d07f34b7f130db0c5e72dd058.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/css/custom-theme.min.0ab8c954a02adc8ff8cfc306d8ab3bd3463c057f69a5aaef066c5efaa444854e.css" id="theme"><link rel="stylesheet" href="/Course-Laboratory-of-Software-Systems/highlight-js/default.min.css">
     
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -47,11 +47,11 @@
 </section>
 <section data-noprocess data-shortcode-slide>
 <h1 id="silo-mentality">Silo mentality</h1>
-<img src="../assets/silos.svg" onerror="this.onerror=null; this.src='../../assets/silos.svg'" style="max-height: 70vh; object-fit: contain;"/>
+<img src="../assets/silos.svg" onerror="this.onerror=null; this.src='../../assets/silos.svg'" style="max-height: 50vh; object-fit: contain;"/>
 </section>
 <section data-noprocess data-shortcode-slide>
 <h1 id="no-silos"><strong>No</strong> silos</h1>
-<img src="../assets/no-silos.svg" onerror="this.onerror=null; this.src='../../assets/no-silos.svg'" style="max-height: 70vh; object-fit: contain;"/>
+<img src="../assets/no-silos.svg" onerror="this.onerror=null; this.src='../../assets/no-silos.svg'" style="max-height: 50vh; object-fit: contain;"/>
 </section>
 <section data-noprocess data-shortcode-slide>
 <h1 id="devops-culture">DevOps culture</h1>
@@ -178,7 +178,7 @@
 <h2 id="forks-and-pull-requests">Forks and pull requests</h2>
 <img src="assets/fork-and-pr.svg" style='
     
-    height: 70vh;
+    height: 50vh;
     max-width: 95vw;
     max-height: 80vh;
     object-fit: contain;
@@ -271,16 +271,17 @@
 <p><img src="assets/integration-traditional.png" style='
     
     
-    max-width: 95vw;
-    max-height: 80vh;
+    max-width: 25vw;
+    max-height: 50vh;
     object-fit: contain;
 '>
 
+$\Rightarrow$
 <img src="assets/integration-continuous.png" style='
     
     
-    max-width: 95vw;
-    max-height: 80vh;
+    max-width: 25vw;
+    max-height: 50vh;
     object-fit: contain;
 '>
 </p>
@@ -438,7 +439,7 @@
   document.getElementsByTagName('head')[0].appendChild(link);
 </script>
 
-<script type="application/json" id="reveal-hugo-site-params">{"height":"100%","pdfseparatefragments":false,"theme":"white","width":"100%"}</script>
+<script type="application/json" id="reveal-hugo-site-params">{"height":"900","pdfseparatefragments":false,"theme":"white","width":"1440"}</script>
 <script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
 
 <script src="/Course-Laboratory-of-Software-Systems/reveal-js/js/reveal.js"></script>
@@ -485,6 +486,34 @@
   <script type="text/javascript" src="/Course-Laboratory-of-Software-Systems/reveal-js/plugin/notes/notes.js"></script>
 
 
+
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({startOnLoad: false});
+    let render = (event) => {
+      let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
+      if (!mermaidElems.length){
+          return
+      }
+      mermaidElems.forEach(mermaidElem => {
+          let processed = mermaidElem.getAttribute('data-processed');
+          if (!processed){
+              
+              mermaid.init(undefined, mermaidElem);
+          }
+      });
+    };
+    Reveal.addEventListener('slidechanged', render);
+    Reveal.addEventListener('ready', render);
+  </script>
 
     <script>
     MathJax = {
