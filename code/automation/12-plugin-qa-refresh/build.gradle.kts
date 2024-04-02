@@ -4,7 +4,7 @@ plugins {
     kotlin("jvm") version "1.7.10"
     id("org.danilopianini.git-sensitive-semantic-versioning") version "0.3.0"
     id("com.gradle.plugin-publish") version "1.0.0"
-    id("pl.droidsonroids.jacoco.testkit") version "1.0.9"
+    id("pl.droidsonroids.jacoco.testkit") version "1.0.12"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
 }
